@@ -1,0 +1,247 @@
+---
+title: 'Environment variables'
+description: 'This is the full list of environment variables used in the project'
+---
+
+# Environment Variables Configuration Guide
+
+This document provides a comprehensive guide to all environment variables used across the Intervo application stack.
+
+## Overview
+
+The Intervo application uses environment variables across three main packages:
+- **Backend** (`packages/intervo-backend/`) - Node.js API server
+- **Frontend** (`packages/intervo-frontend/`) - Next.js web application  
+- **Widget** (`packages/intervo-widget/`) - Embeddable widget component
+
+## Backend Environment Variables
+
+Based on `packages/intervo-backend/env.example`, create `.env` file:
+
+### Core Application Settings
+```bash
+NODE_ENV=development
+SESSION_SECRET=your-super-secret-session-key
+NEXTAUTH_SECRET=your-jwt-secret-key
+ENCRYPTION_KEY=your-32-character-encryption-key
+```
+
+### Database
+```bash
+MONGO_URI=mongodb://admin:password123@localhost:27017/intervo?authSource=admin
+```
+
+### Twilio Communication
+```bash
+TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+TWILIO_AUTH_TOKEN=your-twilio-auth-token
+TWILIO_API_KEY=SKxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+TWILIO_API_SECRET=your-twilio-api-secret
+TWILIO_APP_SID=APxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+TWILIO_PHONE_NUMBER=+1234567890
+```
+
+### AI Services
+```bash
+OPENAI_API_KEY=sk-your-openai-api-key
+GROQ_API_KEY=gsk_your-groq-api-key
+AI_FLOW_API_KEY=your-ai-flow-key
+```
+
+### Speech Services
+```bash
+ASSEMBLYAI_API_KEY=your-assemblyai-api-key
+AZURE_SPEECH_KEY=your-azure-speech-key
+AZURE_SPEECH_REGION=eastus
+ELEVENLABS_API_KEY=your-elevenlabs-api-key
+ELEVENLABS_VOICE_ID=21m00Tcm4TlvDq8ikWAM
+```
+
+### Cloud Storage
+```bash
+AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+AWS_REGION=us-east-1
+```
+
+### Google Services
+```bash
+GOOGLE_CLIENT_ID=your-google-client-id.googleusercontent.com
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+```
+
+## Frontend Environment Variables
+
+Create `.env.local` in `packages/intervo-frontend/`:
+
+```bash
+NODE_ENV=development
+NEXT_PUBLIC_API_URL_DEVELOPMENT=http://localhost:3001
+NEXT_PUBLIC_API_URL_PRODUCTION=https://api.yourdomain.com
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_your-stripe-publishable-key
+```
+
+## Widget Environment Variables
+
+Create `.env` in `packages/intervo-widget/`:
+
+```bash
+VITE_API_URL_DEVELOPMENT=http://localhost:3001
+VITE_API_URL_PRODUCTION=https://api.yourdomain.com
+```
+
+## Quick Development Setup
+
+### 1. Backend Setup
+```bash
+# Copy example file
+cp packages/intervo-backend/env.example packages/intervo-backend/.env
+
+# Edit with minimum required variables:
+NODE_ENV=development
+MONGO_URI=mongodb://admin:password123@localhost:27017/intervo?authSource=admin
+SESSION_SECRET=dev-session-secret-minimum-32-chars
+NEXTAUTH_SECRET=dev-jwt-secret-minimum-32-characters
+ENCRYPTION_KEY=dev-encryption-key-exactly-32-chars
+```
+
+### 2. Frontend Setup
+```bash
+# Create frontend environment file
+cat > packages/intervo-frontend/.env.local << EOF
+NODE_ENV=development
+NEXT_PUBLIC_API_URL_DEVELOPMENT=http://localhost:3001
+EOF
+```
+
+### 3. Widget Setup
+```bash
+# Create widget environment file
+cat > packages/intervo-widget/.env << EOF
+VITE_API_URL_DEVELOPMENT=http://localhost:3001
+EOF
+```
+
+## Service Integration Guides
+
+### Twilio Setup
+1. Create account at [Twilio](https://www.twilio.com/)
+2. Get Account SID and Auth Token from Console
+3. Create API Key and Secret
+4. Purchase phone number
+5. Create TwiML Application
+
+### OpenAI Setup
+1. Create account at [OpenAI](https://platform.openai.com/)
+2. Generate API key from dashboard
+3. Set usage limits and billing
+
+### Stripe Setup
+1. Create account at [Stripe](https://stripe.com/)
+2. Get publishable and secret keys
+3. Set up webhook endpoints
+4. Configure test/production modes
+
+### Speech Services
+- **AssemblyAI**: Get API key from [AssemblyAI](https://www.assemblyai.com/)
+- **Azure Speech**: Create Speech service in Azure portal
+- **ElevenLabs**: Get API key from [ElevenLabs](https://elevenlabs.io/)
+
+## Environment-Specific Configuration
+
+### Development
+- Use test/sandbox API keys
+- Local database connection
+- HTTP URLs acceptable
+
+### Production
+- Production API keys only
+- Secure database connection
+- HTTPS URLs required
+- Strong secrets (32+ characters)
+
+## Security Best Practices
+
+1. **Never commit .env files to version control**
+2. **Use different API keys per environment**
+3. **Rotate secrets regularly**
+4. **Use secure secret management in production**
+
+## Troubleshooting
+
+### Common Issues
+1. **Missing environment variables**: Check server logs for undefined errors
+2. **Frontend API connection**: Verify NEXT_PUBLIC_API_URL_DEVELOPMENT
+3. **Database connection**: Check MONGO_URI format and MongoDB status
+4. **Widget not loading**: Rebuild after environment changes
+
+### Debugging
+```javascript
+// Backend - check environment loading
+console.log('Environment check:', {
+  NODE_ENV: process.env.NODE_ENV,
+  MONGO_URI: process.env.MONGO_URI ? 'Set' : 'Missing'
+});
+
+// Frontend - check public variables
+console.log('Frontend env:', {
+  API_URL: process.env.NEXT_PUBLIC_API_URL_DEVELOPMENT
+});
+
+// Widget - check Vite variables
+console.log('Widget env:', {
+  API_URL: import.meta.env.VITE_API_URL_DEVELOPMENT
+});
+```
+
+## Complete Variable Reference
+
+### Backend Variables (23 total from env.example)
+| Variable | Required | Purpose |
+|----------|----------|---------|
+| `TWILIO_ACCOUNT_SID` | ✅ | Twilio account identifier |
+| `TWILIO_AUTH_TOKEN` | ✅ | Twilio authentication |
+| `TWILIO_API_KEY` | ✅ | Twilio API access |
+| `TWILIO_API_SECRET` | ✅ | Twilio API security |
+| `TWILIO_APP_SID` | ✅ | Twilio application ID |
+| `TWILIO_PHONE_NUMBER` | ✅ | Twilio phone number |
+| `OPENAI_API_KEY` | ✅ | OpenAI API access |
+| `AWS_ACCESS_KEY_ID` | ✅ | AWS access credentials |
+| `AWS_SECRET_ACCESS_KEY` | ✅ | AWS secret credentials |
+| `AWS_REGION` | ✅ | AWS region setting |
+| `MONGO_URI` | ✅ | MongoDB connection |
+| `GOOGLE_CLIENT_ID` | ✅ | Google OAuth ID |
+| `GOOGLE_CLIENT_SECRET` | ✅ | Google OAuth secret |
+| `SESSION_SECRET` | ✅ | Session encryption |
+| `NEXTAUTH_SECRET` | ✅ | JWT token secret |
+| `NODE_ENV` | ✅ | Environment mode |
+| `ASSEMBLYAI_API_KEY` | ✅ | Speech recognition |
+| `AI_FLOW_API_KEY` | ❌ | AI workflow service |
+| `GROQ_API_KEY` | ✅ | Groq AI service |
+| `ELEVENLABS_API_KEY` | ✅ | Text-to-speech |
+| `ELEVENLABS_VOICE_ID` | ❌ | Default voice |
+| `AZURE_SPEECH_KEY` | ✅ | Azure speech service |
+| `AZURE_SPEECH_REGION` | ✅ | Azure region |
+
+### Additional Backend Variables (Found in codebase)
+- `STRIPE_SECRET_KEY` - Stripe payment processing
+- `STRIPE_WEBHOOK_SECRET` - Stripe webhook validation
+- `BASE_URL` - Application base domain
+- `ENCRYPTION_KEY` - Data encryption key
+- `HETZNER_STORAGE_*` - Hetzner cloud storage
+- `DEEPGRAM_API_KEY` - Deepgram speech service
+- `VOYAGE_API_KEY` - Voyage embeddings
+- `MAILCOACH_TOKEN` - Email marketing
+
+### Frontend Variables
+- `NEXT_PUBLIC_API_URL_DEVELOPMENT` - Dev API endpoint
+- `NEXT_PUBLIC_API_URL_PRODUCTION` - Prod API endpoint  
+- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` - Stripe public key
+
+### Widget Variables
+- `VITE_API_URL_DEVELOPMENT` - Dev API endpoint
+- `VITE_API_URL_PRODUCTION` - Prod API endpoint
+
+---
+
+This configuration enables the complete Intervo application stack with all integrations. Adjust API keys and endpoints based on your specific deployment requirements. 

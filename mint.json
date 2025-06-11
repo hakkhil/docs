@@ -59,7 +59,8 @@
       "pages": [
         "introduction",
         "creating-an-ai-agent",
-        "creating-knowledgebase"
+        "creating-knowledgebase",
+        "agent-playground"
       ]
     },
     {

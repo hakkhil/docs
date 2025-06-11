@@ -58,7 +58,7 @@
       "group": "Get Started",
       "pages": [
         "introduction",
-        "quickstart",
+        "creating-an-ai-agent",
         "development"
       ]
     },

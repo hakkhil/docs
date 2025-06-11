@@ -26,10 +26,13 @@
     "url": "https://dashboard.mintlify.com"
   },
   "tabs": [
-   
     {
-      "name": "Self hosted Doc",
+      "name": "Self hosted Docs",
       "url": "open-source"
+    },
+    {
+      "name":"AI Reference",
+      "url": "api-reference"
     }
   ],
   "anchors": [
@@ -73,6 +76,12 @@
       "group": "API Documentation",
       "pages": [
         "api-reference/introduction"
+      ]
+    },
+     {
+      "group": "Self Hosted Docs",
+      "pages": [
+        "open-source/introduction"
       ]
     },
     {

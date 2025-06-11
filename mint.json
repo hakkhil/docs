@@ -83,7 +83,8 @@
       "group": "Self Hosted Docs",
       "pages": [
         "open-source/introduction",
-        "open-source/setup"
+        "open-source/setup",
+        "open-source/environment-variables"
       ]
     },
     {

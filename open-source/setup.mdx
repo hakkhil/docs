@@ -15,28 +15,29 @@ Before you start, ensure the following software is installed:
 
 ### Required Tools
 
-- **Docker & Docker Compose**  
-  Install [Docker Desktop](https://www.docker.com/products/docker-desktop) (includes Docker Engine + Compose).
-
-- **Git**  
+- **Docker & Docker Compose**\
+  Install [Docker Desktop](https://www.docker.com/products/docker-desktop) (includes Docker Engine \+ Compose).
+- **Git**\
   [Install Git](https://git-scm.com/downloads) for your operating system.
-
-- **FFmpeg**  
+- **FFmpeg**\
   Required for audio processing.
 
 #### FFmpeg Installation
 
-**macOS (Homebrew)**  
+**macOS (Homebrew)**
+
 ```bash
 brew install ffmpeg
 ```
 
-**Ubuntu/Debian**  
+**Ubuntu/Debian**
+
 ```bash
 sudo apt update && sudo apt install ffmpeg
 ```
 
-**Windows**  
+**Windows**
+
 ```bash
 choco install ffmpeg
 # or
@@ -74,7 +75,7 @@ intervo-react/
 ### 1. Clone the Repository
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/intervo/intervo
 cd intervo-react
 ```
 
@@ -87,13 +88,13 @@ Ensure the structure matches the layout above. Docker volumes and npm workspaces
 **Foreground (with logs)**
 
 ```bash
-docker-compose -f opensource-docker-compose.yml up
+docker-compose -f docker-compose.yml up
 ```
 
 **Detached Mode**
 
 ```bash
-docker-compose -f opensource-docker-compose.yml up -d
+docker-compose -f docker-compose.yml up -d
 ```
 
 ### 4. First-Time Setup
@@ -114,12 +115,12 @@ On the first run, Docker will:
 
 ## 🌐 Accessing Services
 
-| Service       | URL/Port                        |
-|---------------|---------------------------------|
-| Frontend      | http://localhost:3000           |
-| Backend API   | http://localhost:3001           |
-| RAG API       | http://localhost:4003           |
-| MongoDB URI   | `mongodb://admin:password123@localhost:27017/intervo?authSource=admin` |
+| Service     | URL/Port                                                               |
+| ----------- | ---------------------------------------------------------------------- |
+| Frontend    | http://localhost:3000                                                  |
+| Backend API | http://localhost:3001                                                  |
+| RAG API     | http://localhost:4003                                                  |
+| MongoDB URI | `mongodb://admin:password123@localhost:27017/intervo?authSource=admin` |
 
 ---
 
@@ -135,13 +136,13 @@ On the first run, Docker will:
 
 ```bash
 # All logs
-docker-compose -f opensource-docker-compose.yml logs
+docker-compose -f docker-compose.yml logs
 
 # Specific service
-docker-compose -f opensource-docker-compose.yml logs backend
+docker-compose -f docker-compose.yml logs backend
 
 # Real-time logs
-docker-compose -f opensource-docker-compose.yml logs -f
+docker-compose -f docker-compose.yml logs -f
 ```
 
 ---
@@ -151,25 +152,25 @@ docker-compose -f opensource-docker-compose.yml logs -f
 ### Stop Services
 
 ```bash
-docker-compose -f opensource-docker-compose.yml down
+docker-compose -f docker-compose.yml down
 ```
 
 ### Clean Reset (Remove Volumes)
 
 ```bash
-docker-compose -f opensource-docker-compose.yml down -v
+docker-compose -f docker-compose.yml down -v
 ```
 
 ### Rebuild Services
 
 ```bash
-docker-compose -f opensource-docker-compose.yml up --build
+docker-compose -f docker-compose.yml up --build
 ```
 
 ### Restart Specific Service
 
 ```bash
-docker-compose -f opensource-docker-compose.yml restart frontend
+docker-compose -f docker-compose.yml restart frontend
 ```
 
 ---
@@ -187,6 +188,7 @@ docker-compose -f opensource-docker-compose.yml restart frontend
 ### MongoDB Compass
 
 Use:
+
 ```
 mongodb://admin:password123@localhost:27017/intervo?authSource=admin
 ```
@@ -194,7 +196,7 @@ mongodb://admin:password123@localhost:27017/intervo?authSource=admin
 ### Command Line
 
 ```bash
-docker-compose -f opensource-docker-compose.yml exec mongodb mongosh -u admin -p password123 --authenticationDatabase admin
+docker-compose -f docker-compose.yml exec mongodb mongosh -u admin -p password123 --authenticationDatabase admin
 ```
 
 ---
@@ -203,30 +205,28 @@ docker-compose -f opensource-docker-compose.yml exec mongodb mongosh -u admin -p
 
 ### Common Issues
 
-- **Port Conflicts**  
+- **Port Conflicts**\
   Check with: `sudo lsof -i :3000`
-
-- **Docker Stuck**  
+- **Docker Stuck**\
   Restart Docker or run: `docker system prune`
-
-- **Corrupt Volumes**  
-  Run: `docker-compose -f opensource-docker-compose.yml down -v`
-
-- **Build Failures**  
+- **Corrupt Volumes**\
+  Run: `docker-compose -f docker-compose.yml down -v`
+- **Build Failures**\
   Clean and rebuild:
+
   ```bash
-  docker-compose -f opensource-docker-compose.yml down -v
-  docker-compose -f opensource-docker-compose.yml up --build
+  docker-compose -f docker-compose.yml down -v
+  docker-compose -f docker-compose.yml up --build
   ```
 
 ### Debugging Services
 
 ```bash
 # Container status
-docker-compose -f opensource-docker-compose.yml ps
+docker-compose -f docker-compose.yml ps
 
 # Open shell in backend
-docker-compose -f opensource-docker-compose.yml exec backend sh
+docker-compose -f docker-compose.yml exec backend sh
 ```
 
 ---
@@ -236,15 +236,16 @@ docker-compose -f opensource-docker-compose.yml exec backend sh
 - **Live Reload**: Code changes reflect instantly due to mounted volumes
 - **Persistent MongoDB**: Data is stored in Docker volume `mongodb_data`
 - **Clean Fix**: If stuck, run:
+
   ```bash
-  docker-compose -f opensource-docker-compose.yml down -v && docker-compose -f opensource-docker-compose.yml up
+  docker-compose -f docker-compose.yml down -v && docker-compose -f docker-compose.yml up
   ```
 
 ---
 
 ## 🔑 Environment Variables
 
-Defined in `opensource-docker-compose.yml`:
+Defined in `docker-compose.yml`:
 
 ```env
 NODE_ENV=development
@@ -256,9 +257,9 @@ PYTHONPATH=/app/packages/intervo-backend
 
 ## ✅ Next Steps
 
-- Visit the app at: [http://localhost:3000](http://localhost:3000)
-- Test API endpoints via Postman or browser at [http://localhost:3001](http://localhost:3001)
-- Check RAG API status at [http://localhost:4003](http://localhost:4003)
+- Visit the app at: http://localhost:3000
+- Test API endpoints via Postman or browser at http://localhost:3001
+- Check RAG API status at http://localhost:4003
 
 ---
 
@@ -268,4 +269,4 @@ For production, create a dedicated and secure `docker-compose.prod.yml` and upda
 
 ---
 
-Happy coding! 🎉
+Happy coding\! 🎉

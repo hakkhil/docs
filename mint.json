@@ -61,8 +61,15 @@
         "creating-an-ai-agent",
         "creating-knowledgebase",
         "agent-playground",
-        "workspace-and-team",
         "workflow"
+      ]
+    },
+    {
+      "group": "Workspace",
+      "pages":[
+        
+        "workspace-and-team",
+        "usage-and-credits"
       ]
     },
     {

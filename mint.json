@@ -27,10 +27,7 @@
   },
   "tabs": [
 
-    {
-      "name":"AI Reference",
-      "url": "api-reference"
-    },
+    
      {
       "name": "Self hosted Docs",
       "url": "open-source"
@@ -38,19 +35,19 @@
   ],
   "anchors": [
     {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://docs.intervo.ai/"
+      "name": "Sign In/Sign Up",
+      "icon": "user",
+      "url": "https://app.intervo/login"
     },
     {
       "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
+      "icon": "discord",
+      "url": "https://discord.com/invite/paFJtW8fkZ"
     },
     {
       "name": "Blog",
       "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "url": "https://intervo.ai/blog"
     }
   ],
   "navigation": [
@@ -81,12 +78,7 @@
      
       ]
     },
-    {
-      "group": "API Documentation",
-      "pages": [
-        "api-reference/introduction"
-      ]
-    },
+ 
      {
       "group": "Self Hosted Docs",
       "pages": [

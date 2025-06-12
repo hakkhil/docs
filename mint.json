@@ -67,7 +67,8 @@
       "group": "Publishing an Agent",
       "pages": [
         "publishing-an-agent/website-widget",
-        "publishing-an-agent/phone-agent"
+        "publishing-an-agent/phone-agent",
+        "publishing-an-agent/webhooks"
      
       ]
     },

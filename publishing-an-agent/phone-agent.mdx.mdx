@@ -1,0 +1,192 @@
+---
+title: "Phone Agent"
+description: "Learn how to connect your Intervo.ai agent to the telephone network using Twilio, enabling it to handle both incoming and outgoing calls automatically."
+---
+
+# Connecting Your Agent to the World: A Guide to the Phone Agent
+
+Take your AI agent beyond the web and onto the global telephone network. By integrating with Twilio, you can assign a real phone number to your Intervo.ai agent, allowing it to answer customer calls 24/7, make outbound calls programmatically, and provide a seamless voice experience over the phone.
+
+This comprehensive guide will walk you through every step of the setup process, from configuring your Twilio account to making your first API-driven outbound call.
+
+---
+
+## The Big Picture: How it Works
+
+The process involves three main stages:
+
+1. **Setting up Twilio**: You will create a Twilio account, secure your API credentials, and purchase a phone number.
+2. **Connecting Twilio to Intervo.ai**: You will provide your Twilio credentials to Intervo.ai, allowing our platform to manage calls on your behalf.
+3. **Assigning a Number and Making Calls**: You will link your new phone number to your AI agent and learn how to handle both incoming and outgoing calls.
+
+---
+
+## Step 1: Prerequisites - Setting Up Your Twilio Account
+
+Before you can configure your Phone Agent in Intervo.ai, you need to complete two essential tasks in your Twilio account.
+
+<img
+  src="/images/Xnapper-2025-06-12-09.22.43.png"
+  alt="Xnapper 2025 06 12 09 22 43 Pn"
+  title="Xnapper 2025 06 12 09 22 43 Pn"
+  className="mx-auto"
+  style={{ width:"45%" }}
+/>
+
+### A. Create a Twilio Account & Find Your Credentials
+
+First, you need an active Twilio account.
+
+1. If you don't have one, go to [twilio.com](https://www.twilio.com/) and sign up.
+2. Once logged in, navigate to your main Account Dashboard.
+3. On the dashboard, you will find your **Account SID** and **Auth Token**. These are your master credentials. Keep them safe and do not share them publicly.
+
+You will need these two values in a moment.
+
+### B. Purchase a Phone Number
+
+Your AI agent needs a dedicated phone number.
+
+1. In your Twilio Console, navigate to the "Phone Numbers" section.
+2. Go to `Manage > Buy a number`.
+3. Search for a number based on your country, desired capabilities (ensure it has **Voice** capability), and area code.
+4. Purchase the number. It will now be listed under your "Active Numbers."
+
+---
+
+## Step 2: Connecting Twilio to Intervo.ai
+
+Now that you have your Twilio credentials and a phone number, it's time to connect the two platforms.
+
+1. In your Intervo.ai dashboard, navigate to the main **Settings**.
+2. Select the **"Connect Twilio"** tab.
+3. Carefully enter the **Twilio Account SID** and **Twilio Auth Token** that you retrieved in the previous step.
+4. Click **"Save & Authenticate Twilio"**.
+
+Our system will verify the credentials. A successful connection is the first prerequisite for enabling phone features.
+
+![The "Connect Twilio" settings page in Intervo.ai](/Xnapper-2025-06-12-01.49.21.png)
+
+---
+
+## Step 3: Assigning a Phone Number to Your Agent
+
+With Twilio connected, you can now assign your purchased phone number to a specific AI agent.
+
+1. Ensure the agent you want to use has been configured and **published** from the Agent Playground.
+2. In the Intervo.ai dashboard, navigate to the **Phone Numbers** section (e.g., `app.intervo.ai/default/phonenumber`).
+3. Click **"Add New Phone Number"**. A popup will appear.
+4. **Select phone number**: This dropdown will automatically list all the phone numbers you own in your connected Twilio account. Choose the number you want to use.
+5. **Select Agent**: Choose the published AI agent you want to answer calls on this number.
+6. Click **"Add Phone Number"**.
+
+![The "Add New Phone Number" modal in Intervo.ai](/Screenshot2025-06-12at9.25.00AM.png)
+
+Now, if you return to your agent's **Connect** settings, you will see green checkmarks next to both prerequisites, indicating that your Phone Agent is fully configured and ready.
+
+![Prerequisites section showing both Twilio Connection and Phone Number Assignment are complete](/Screenshot2025-06-12at9.25.46AM.png)
+
+---
+
+## Step 4: Handling Incoming and Outgoing Calls
+
+### Incoming Calls (Automatic)
+
+This is the easy part. The setup is already complete.
+
+When someone calls the Twilio phone number you assigned, Intervo.ai will automatically route the call to your AI agent. The agent will answer and begin the conversation using the introduction, knowledge, and workflow you configured in the Agent Playground.
+
+![An indicator showing that incoming calls are automatically configured](/Xnapper-2025-06-12-09.27.27.png)
+
+### Outgoing Calls (via API)
+
+To make your agent initiate a call, you need to use our Outgoing Calls API. This is perfect for proactive notifications, appointment reminders, automated surveys, and more.
+
+You will need two pieces of information from the **Connect** tab of your agent:
+
+- **API ENDPOINT**: The unique URL for your agent's workflow.
+- **API KEY**: Your unique, secret key for authentication.
+
+### Request Structure
+
+- **Method**: `POST`
+- **URL**: `YOUR_API_ENDPOINT?` \+ `QUERY_PARAMETERS`
+- **Headers**:
+  - `x-api-key`: `YOUR_API_KEY`
+  - `Content-Type`: `application/json`
+
+### Query Parameters
+
+You can pass data to your agent by adding parameters to the request URL. This is useful for personalizing the call (e.g., "Hi John...").
+
+| Parameter     | Required | Description                                                       | Example                |
+| :------------ | :------- | :---------------------------------------------------------------- | :--------------------- |
+| `phoneNumber` | **Yes**  | The destination phone number to call, including the country code. | `+1234567890`          |
+| `firstName`   | No       | The first name of the person being called.                        | `Jane`                 |
+| `lastName`    | No       | The last name of the person being called.                         | `Doe`                  |
+| `email`       | No       | The email address of the person being called.                     | `jane.doe@example.com` |
+| `country`     | No       | The country of the person being called.                           | `United States`        |
+| `callType`    | **Yes**  | Must be set to `outbound`.                                        | `outbound`             |
+
+_`You can also add any custom parameters you need (e.g., &orderId=12345). Your agent can be configured to use this data in its conversation.`_
+
+#### Example API Call
+
+Here are examples of how to initiate an outbound call using `curl` and JavaScript.
+
+**`curl Example:`**
+
+```bash
+curl -X POST \
+  '[https://api.intervo.ai/workflow/YOUR_WORKFLOW_ID?phoneNumber=+1234567890&firstName=John&lastName=Doe&email=john.doe@example.com&callType=outbound&country=United%20States](https://api.intervo.ai/workflow/YOUR_WORKFLOW_ID?phoneNumber=+1234567890&firstName=John&lastName=Doe&email=john.doe@example.com&callType=outbound&country=United%20States)' \
+  --header 'x-api-key: YOUR_API_KEY' \
+  --header 'Content-Type: application/json'
+```
+
+**`Javascript Example:`**
+
+```js
+// You might need to install node-fetch: npm install node-fetch
+const fetch = require('node-fetch');
+
+const API_ENDPOINT = '[https://api.intervo.ai/workflow/YOUR_WORKFLOW_ID](https://api.intervo.ai/workflow/YOUR_WORKFLOW_ID)';
+const API_KEY = 'YOUR_API_KEY';
+
+async function makeOutboundCall(phoneNumber, firstName) {
+const params = new URLSearchParams({
+  phoneNumber: phoneNumber,
+  firstName: firstName,
+  callType: 'outbound'
+});
+
+const url = `${API_ENDPOINT}?${params}`;
+
+console.log(`Initiating call to ${url}`);
+
+try {
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'x-api-key': API_KEY,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error(`API request failed with status ${response.status}`);
+  }
+
+  const data = await response.json();
+  console.log('API Response:', data);
+  return data;
+
+} catch (error) {
+  console.error('Error initiating call:', error);
+}
+}
+
+// Example usage:
+makeOutboundCall('+1234567890', 'Jane');
+```
+
+You have now fully configured your Phone Agent. It can serve as an automated receptionist for inbound calls and a proactive communication tool for outbound campaigns, all powered by the agent you designed.

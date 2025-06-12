@@ -86,19 +86,11 @@
         "open-source/setup",
         "open-source/environment-variables"
       ]
-    },
-    {
-      "group": "Endpoint Examples",
-      "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
-      ]
     }
+    
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/intervo",
-    "linkedin": "https://linkedin.com/company/mintlify"
+    "x": "https://x.com/intervoai",
+    "github": "https://github.com/intervo"
   }
 }

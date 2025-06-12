@@ -64,14 +64,11 @@
       ]
     },
     {
-      "group": "Essentials",
+      "group": "Publishing an Agent",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
+        "publishing-an-agent/website-widget",
+        "publishing-an-agent/phone-agent"
+     
       ]
     },
     {

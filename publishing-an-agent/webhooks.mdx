@@ -1,0 +1,145 @@
+---
+title: "Webhooks"
+description: "Learn how to connect Intervo.ai to your other business systems using webhooks. Get real-time notifications for call summaries, new contacts, and more."
+---
+
+# Automating Your Workflows with Webhook Integrations
+
+The Intervo.ai platform is powerful on its own, but its true potential is realized when it communicates with the other tools you use every day. **Webhook Integration** is the bridge that connects your AI agent's activities to your CRM, helpdesk, database, or any other custom application in real-time.
+
+This guide will walk you through setting up webhooks to receive automated notifications for key events, such as when a call is summarized or a new contact is created.
+
+---
+
+## What is a Webhook?
+
+A webhook is an automated message sent from one app to another when a specific event occurs. In the context of Intervo.ai, when a "Trigger Event" (like a completed conversation) happens, our system will automatically send an HTTP request with a detailed data payload to a "Webhook Endpoint" (a URL you provide).
+
+This allows you to:
+
+- Instantly update your CRM with new leads captured by your agent.
+- Automatically create support tickets in your helpdesk from a user conversation.
+- Log detailed call summaries to a database or spreadsheet for analysis.
+- Trigger custom workflows in platforms like Zapier or Make.
+
+---
+
+## How to Configure a Webhook
+
+Setting up a new webhook is a straightforward process.
+
+1. Navigate to the **Webhook Integration** section in your Intervo.ai settings.
+2. Click "Add Webhook" or begin filling out the configuration form.
+
+<img
+  src="/Xnapper-2025-06-12-09.47.33.png"
+  alt="The Webhook Integration configuration page in Intervo.ai"
+  title=""
+  className="mx-auto"
+  style={{ width:"72%" }}
+/>
+
+You will need to configure the following fields:
+
+- **Webhook Name**: A friendly, descriptive name for your integration so you can easily identify it. For example, "Salesforce New Lead" or "Zendesk Ticket Creator".
+- **Webhook Endpoint**: This is the most critical part. It's the unique URL of the application that will receive the data from Intervo.ai. You must get this URL from the receiving system (e.g., your CRM's API documentation, Zapier, etc.).
+- **HTTP Method**: Select the HTTP method for the request. `POST` is the most common method for sending data via webhooks and is recommended in most cases.
+- **Trigger Event**: Choose the specific event in Intervo.ai that will trigger this webhook to be sent.
+
+Once configured, click **"Save Changes"**. Your webhook is now active.
+
+---
+
+## Understanding Trigger Events and Data Payloads
+
+When a trigger event occurs, we will send a JSON payload to your endpoint with all the relevant information. Below are the available events and examples of the data they send.
+
+### 1. AI Call Summary
+
+This event triggers after a call has ended and our AI has generated a summary of the conversation.
+
+- **Use Case**: Perfect for logging the outcome of a support call in a helpdesk ticket or adding detailed notes to a contact in your CRM.
+- **Example Payload**:
+
+  ```json
+  {
+    "event": "ai_call_summary",
+    "timestamp": "2025-06-12T10:30:00Z",
+    "agent": {
+      "id": "agent_12345",
+      "name": "Support Bot"
+    },
+    "contact": {
+      "id": "contact_67890",
+      "phoneNumber": "+1234567890",
+      "firstName": "Jane",
+      "lastName": "Doe"
+    },
+    "call": {
+      "sid": "CAxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "duration": 125,
+      "transcript": "User: Hi, my order is late. Agent: I'm sorry to hear that...",
+      "summary": "The user, Jane Doe, called to inquire about a late order (ID #54321). The agent apologized, confirmed the new delivery date is tomorrow, and offered a 10% discount on her next purchase."
+    }
+  }
+  ```
+
+### 2. New Contact Created
+
+This event triggers when your agent interacts with a phone number for the first time and captures their details, effectively creating a new contact.
+
+- **Use Case**: Automatically create a new lead or contact record in your CRM (like Salesforce, HubSpot, or Zoho) the moment your agent identifies a potential customer.
+- **Example Payload**:
+
+  ```json
+  {
+    "event": "new_contact_created",
+    "timestamp": "2025-06-12T11:00:00Z",
+    "agent": {
+      "id": "agent_54321",
+      "name": "Lead Qualification Bot"
+    },
+    "contact": {
+      "id": "contact_11223",
+      "phoneNumber": "+19876543210",
+      "firstName": "John",
+      "lastName": "Smith",
+      "email": "john.smith@example.com"
+    }
+  }
+  ```
+
+### 3. Conversation Completed
+
+This event triggers every time a conversation with a user ends, regardless of the outcome.
+
+- **Use Case**: Useful for general-purpose logging, analytics, or triggering follow-up sequences for every interaction.
+- **Example Payload**:
+
+  ```json
+  {
+    "event": "conversation_completed",
+    "timestamp": "2025-06-12T12:00:00Z",
+    "agent": {
+      "id": "agent_12345",
+      "name": "Support Bot"
+    },
+    "contact": {
+      "id": "contact_67890",
+      "phoneNumber": "+1234567890"
+    },
+    "conversation": {
+      "id": "conv_abc123",
+      "duration": 125,
+      "channel": "voice"
+    }
+  }
+  ```
+
+---
+
+## Best Practices for Security
+
+When you expose an endpoint to receive webhooks, it's a good practice to verify that the incoming requests are genuinely from Intervo.ai. While not shown in the UI, we include a unique signature in each request's header that you can use to validate the payload. Please refer to our developer documentation for instructions on implementing webhook signature verification.
+
+By leveraging webhooks, you can transform your Intervo.ai agent from a standalone tool into a fully integrated component of your business automation strategy.
